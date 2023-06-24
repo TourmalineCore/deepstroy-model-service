@@ -1,0 +1,1 @@
+from deepstroy_model_service.domain.forecasted_files.forecasted_files import ForecastedFile

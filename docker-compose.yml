@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  run-model-service:
+    container_name: deepstroy-model-service-local-starter
+    restart: "no"
+    image: tianon/true
+    depends_on:
+      - deepstroy-model-service
+
+  deepstroy-model-service:
+    build:
+      context: .
+    container_name: deepstroy-model-service
+    restart: unless-stopped
+    command: poetry run flask run
+    depends_on:
+      - deepstroy-model-service-postgres
+    volumes:
+      - .:/app-workspace
+    env_file:
+      - .env
+    ports:
+      - "9342:5000"
+    networks:
+      - deepstroy-api_deepstroy-net
+      - internal
+
+  deepstroy-model-service-postgres:
+    container_name: deepstroy-model-service-postgres
+    image: postgres:13.3-alpine
+    restart: always
+    volumes:
+      - deepstroy-model-service-postgres-data:/var/lib/postgresql/data/
+    healthcheck:
+      test: "pg_isready -U $$POSTGRES_USER"
+      timeout: 10s
+      interval: 10s
+      retries: 3
+    env_file:
+      - .env
+    ports:
+      - "9343:5432"
+    networks:
+      - internal
+
+volumes:
+  deepstroy-model-service-postgres-data:
+
+networks:
+  internal: {}
+  deepstroy-api_deepstroy-net:
+    external: true
