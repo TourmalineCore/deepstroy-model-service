@@ -32,7 +32,7 @@ def create_app():
         _upgrade()
 
     consuming_thread = MessagesTrafficController()
-    consuming_thread.daemon = True
+    # consuming_thread.daemon = True
     consuming_thread.start()
     logging.warning("Start listening to the queue.")
 

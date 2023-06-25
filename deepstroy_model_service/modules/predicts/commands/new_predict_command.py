@@ -16,7 +16,7 @@ class NewPredictCommand:
         with open("data_tmp_file.xlsx", "wb") as binary_file:
             binary_file.write(file_bytes)
         df = pd.read_excel("data_tmp_file.xlsx")
-        df["date_report"] = pd.Series(result)
+        df["predicting_result"] = pd.Series(result)
         byte = df.to_csv(None).encode()
         forecasted_file_entity = ForecastedFile(
             id=file_id,
