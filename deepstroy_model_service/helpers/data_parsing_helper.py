@@ -73,6 +73,7 @@ std_dict = {
     'estimated_task_time': 141.96508889870012,
 }
 
+
 def normalization(data):
     for colum in list(data.columns[:-1]):
         mean = mean_dict[colum]

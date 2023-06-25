@@ -68,16 +68,14 @@ class ForecastingModel(ProcessingModelBase, ABC):
         #
         # pool_test = Pool(X_test, y_test)
         if 'estimated_task_time' in test_data.columns:
-            X_test = np.array(test_data[normalized_data.columns[:-2]])
+            X_test = np.array(normalized_data[test_data.columns[:-2]])
             print(f'With estimated_task_time: {X_test[0]}')
             answer = model.predict(X_test)
             answer = (answer + mean_dict['estimated_task_time']) * std_dict['estimated_task_time']
         else:
-            X_test = np.array(test_data[normalized_data.columns[:-1]])
+            X_test = np.array(normalized_data[test_data.columns[:-1]])
             print(f'NOT estimated_task_time: {X_test[0]}')
             answer = model.predict(X_test)
             answer = (answer + mean_dict['estimated_task_time']) * std_dict['estimated_task_time']
 
-        print(answer)
-
-        # return array with results
+        return answer

@@ -31,7 +31,6 @@ def create_app():
     with app.app_context():
         _upgrade()
 
-    os.system(f"unzip -j -qq model.pkl.zip/\*.zip -d model.pkl.zip")
     consuming_thread = MessagesTrafficController()
     consuming_thread.daemon = True
     consuming_thread.start()
